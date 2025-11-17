@@ -43,7 +43,7 @@ export default function ProfileForm({ formData, setFormData }: ProfileFormProps)
       );
 
       setMessage("✅ Profile completed successfully! Redirecting to Home...");
-      setTimeout(() => navigate("/"), 1800);
+      setTimeout(() => navigate("/home"), 1800);
     } catch (error: any) {
       setMessage("❌ Error saving profile: " + error.message);
     } finally {

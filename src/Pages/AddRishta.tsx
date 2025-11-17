@@ -503,7 +503,7 @@ export default function AddRishta() {
 
       // ✅ Reset form and redirect
       resetForm();
-      navigate("/");
+      navigate("/home");
     } catch (err: any) {
       console.error("❌ Error adding rishta:", err);
       alert(`Error adding rishta: ${err.message}`);

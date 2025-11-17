@@ -20,7 +20,7 @@ const Header = () => {
 
       // Small delay to show the toast before navigating
       setTimeout(() => {
-        navigate("/login");
+        navigate("/");
       }, 1000);
     } catch (err) {
       console.error("Error logging out:", err);
@@ -32,7 +32,7 @@ const Header = () => {
 
   const menuItems = [
     // { name: "Home", path: "/" },
-    { name: "Browse Profiles", path: "/" },
+    { name: "Browse Profiles", path: "/home" },
     { name: "My Profile", path: "/my-profile" },
     { name: "Add Profile", path: "/add-profile" },
     { name: "Payment", path: "/payment" },
@@ -45,7 +45,7 @@ const Header = () => {
         {/* Logo */}
         <div
           className="flex items-center gap-2 text-2xl font-bold cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         >
           <img
             src={logo}

@@ -48,14 +48,15 @@ function App() {
         <Router>
           <ScrollToTop />
           <Routes>
-            {/* ✅ Public routes (only these 3 allowed without login) */}
+            {/* ✅ Public routes - Signup page is the landing page */}
+            <Route path="/" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 
             {/* ✅ All other routes protected */}
             <Route
-              path="/"
+              path="/home"
               element={
                 <ProtectedRoute>
                   <Home />

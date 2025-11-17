@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CustomInput from "../Common/CustomInput";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -240,7 +239,7 @@ const Signup = () => {
           position: "top-right",
           autoClose: 1500,
         });
-        setTimeout(() => navigate("/"), 1500);
+        setTimeout(() => navigate("/home"), 1500);
       }
     } catch (error: any) {
       console.error("Login error:", error);
@@ -310,129 +309,120 @@ const Signup = () => {
 
       {/* Right Side - Form Section with Signup and Login */}
       <div className="flex-1 flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
-        <div className="w-full max-w-2xl space-y-6">
-          {/* Registration Section */}
+        <div className="w-full max-w-2xl">
+          {/* Single Card with Both Forms */}
           <div className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
-            {/* Bilingual Header */}
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-2">
-                Register your profile if you are new to this platform
-              </h2>
-              <p className="text-lg text-gray-700 mb-4">
-                اگر آپ اس پلیٹ فارم پر نئے ہیں تو اپنا پروفائل رجسٹر کریں
-              </p>
-              <p className="text-sm text-gray-600 mb-2">
-                Enter your WhatsApp number in the box below and press NEXT button
-              </p>
-              <p className="text-sm text-gray-600">
-                نیچے دیے گئے خانے میں اپنا وٹس ایپ نمبر درج کریں اور NEXT کا بٹن دبائیں۔
-              </p>
-            </div>
+            {/* Registration Section */}
+            <div className="mb-8">
+              {/* Bilingual Header */}
+              <div className="mb-6">
+                <div className="flex items-start gap-3 mb-2">
+                  <h2 className="text-base font-semibold text-black leading-tight flex-1">
+                    Register your profile if you are new to this platform
+                  </h2>
+                  <p className="text-base text-black leading-tight flex-1 text-right">
+                    اگر آپ اس پلیٹ فارم پر نئے ہیں تو اپنا پروفائل رجسٹر کریں
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <p className="text-sm text-gray-700 flex-1">
+                    Enter your WhatsApp number in the box below and press NEXT button
+                  </p>
+                  <p className="text-sm text-gray-700 flex-1 text-right">
+                    نیچے دیے گئے خانے میں اپنا وٹس ایپ نمبر درج کریں اور NEXT کا بٹن دبائیں۔
+                  </p>
+                </div>
+              </div>
 
             <form onSubmit={handleSignup} className="space-y-4">
               {/* WhatsApp Number Input - Two Part */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  WhatsApp Number
-                </label>
-                <div className="flex gap-2">
-                  {/* Country Code Box */}
-                  <div className="w-20">
-                    <input
-                      type="text"
-                      value="+92"
-                      readOnly
-                      className="w-full h-14 px-3 border-2 border-gray-300 rounded-lg bg-gray-100 text-gray-700 font-semibold text-center cursor-not-allowed"
-                    />
-                  </div>
-                  {/* Phone Number Input */}
-                  <div className="flex-1">
-                    <CustomInput
-                      type="tel"
-                      name="phoneNumber"
-                      placeholder="3218800544"
-                      value={signupData.phoneNumber}
-                      onChange={(e) =>
-                        setSignupData((prev) => ({
-                          ...prev,
-                          phoneNumber: e.target.value,
-                        }))
-                      }
-                      className="w-full h-14 px-4 border-2 border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-200"
-                      required
-                    />
-                  </div>
+              <div className="flex gap-2">
+                {/* Country Code Box */}
+                <div className="w-20">
+                  <input
+                    type="text"
+                    value="+92"
+                    readOnly
+                    className="w-full h-12 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-sm"
+                  />
+                </div>
+                {/* Phone Number Input */}
+                <div className="flex-1">
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    placeholder="3218800544"
+                    value={signupData.phoneNumber}
+                    onChange={(e) =>
+                      setSignupData((prev) => ({
+                        ...prev,
+                        phoneNumber: e.target.value,
+                      }))
+                    }
+                    className="w-full h-12 px-4 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                    required
+                  />
                 </div>
               </div>
 
               {/* Password Input */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <div className="relative">
-                  <CustomInput
-                    type={showSignupPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Enter your password"
-                    value={signupData.password}
-                    onChange={(e) =>
-                      setSignupData((prev) => ({
-                        ...prev,
-                        password: e.target.value,
-                      }))
-                    }
-                    className="w-full h-14 px-4 pr-12 border-2 border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-200"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowSignupPassword(!showSignupPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-700"
-                  >
-                    {showSignupPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
+              <div className="relative">
+                <input
+                  type={showSignupPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Enter your password"
+                  value={signupData.password}
+                  onChange={(e) =>
+                    setSignupData((prev) => ({
+                      ...prev,
+                      password: e.target.value,
+                    }))
+                  }
+                  className="w-full h-12 px-4 pr-12 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowSignupPassword(!showSignupPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700"
+                >
+                  {showSignupPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
               </div>
 
               {/* Confirm Password Input */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <CustomInput
-                    type={showSignupConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    placeholder="Confirm your password"
-                    value={signupData.confirmPassword}
-                    onChange={(e) =>
-                      setSignupData((prev) => ({
-                        ...prev,
-                        confirmPassword: e.target.value,
-                      }))
-                    }
-                    className="w-full h-14 px-4 pr-12 border-2 border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-200"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setShowSignupConfirmPassword(!showSignupConfirmPassword)
-                    }
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-700"
-                  >
-                    {showSignupConfirmPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
+              <div className="relative">
+                <input
+                  type={showSignupConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  value={signupData.confirmPassword}
+                  onChange={(e) =>
+                    setSignupData((prev) => ({
+                      ...prev,
+                      confirmPassword: e.target.value,
+                    }))
+                  }
+                  className="w-full h-12 px-4 pr-12 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowSignupConfirmPassword(!showSignupConfirmPassword)
+                  }
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700"
+                >
+                  {showSignupConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
               </div>
 
               {/* Message Display */}
@@ -452,11 +442,11 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={signupLoading}
-                className="w-full h-14 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-lg rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-12 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-base rounded transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {signupLoading ? (
                   <>
-                    <span className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
                     Creating...
                   </>
                 ) : (
@@ -464,88 +454,80 @@ const Signup = () => {
                 )}
               </button>
             </form>
-          </div>
-
-          {/* Login Section */}
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
-            {/* Bilingual Header */}
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-2">
-                If you are already registered on this platform, Enter your WhatsApp number and press LOG IN button
-              </h2>
-              <p className="text-lg text-gray-700 mb-4">
-                اگر آپ پلیٹ فارم پر پہلے سے رجسٹرڈ ہیں تو اپنا وٹس ایپ نمبر لکھیں اور LOG IN کا بٹن دبائیں
-              </p>
             </div>
+
+            {/* Login Section */}
+            <div className="mt-8">
+              {/* Bilingual Header */}
+              <div className="mb-6">
+                <div className="flex items-start gap-3">
+                  <h2 className="text-base font-semibold text-black leading-tight flex-1">
+                    If you are already registered on this platform, Enter your WhatsApp number and press LOG IN button
+                  </h2>
+                  <p className="text-base text-black leading-tight flex-1 text-right">
+                    اگر آپ پلیٹ فارم پر پہلے سے رجسٹرڈ ہیں تو اپنا وٹس ایپ نمبر لکھیں اور LOG IN کا بٹن دبائیں
+                  </p>
+                </div>
+              </div>
 
             <form onSubmit={handleLogin} className="space-y-4">
               {/* WhatsApp Number Input - Two Part */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  WhatsApp Number
-                </label>
-                <div className="flex gap-2">
-                  {/* Country Code Box */}
-                  <div className="w-20">
-                    <input
-                      type="text"
-                      value="+92"
-                      readOnly
-                      className="w-full h-14 px-3 border-2 border-gray-300 rounded-lg bg-gray-100 text-gray-700 font-semibold text-center cursor-not-allowed"
-                    />
-                  </div>
-                  {/* Phone Number Input */}
-                  <div className="flex-1">
-                    <CustomInput
-                      type="tel"
-                      name="phoneNumber"
-                      placeholder="3218800544"
-                      value={loginData.phoneNumber}
-                      onChange={(e) =>
-                        setLoginData((prev) => ({
-                          ...prev,
-                          phoneNumber: e.target.value,
-                        }))
-                      }
-                      className="w-full h-14 px-4 border-2 border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-200"
-                      required
-                    />
-                  </div>
+              <div className="flex gap-2">
+                {/* Country Code Box */}
+                <div className="w-20">
+                  <input
+                    type="text"
+                    value="+92"
+                    readOnly
+                    className="w-full h-12 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-sm"
+                  />
+                </div>
+                {/* Phone Number Input */}
+                <div className="flex-1">
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    placeholder="3218800544"
+                    value={loginData.phoneNumber}
+                    onChange={(e) =>
+                      setLoginData((prev) => ({
+                        ...prev,
+                        phoneNumber: e.target.value,
+                      }))
+                    }
+                    className="w-full h-12 px-4 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                    required
+                  />
                 </div>
               </div>
 
               {/* Password Input */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <div className="relative">
-                  <CustomInput
-                    type={showLoginPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Enter your password"
-                    value={loginData.password}
-                    onChange={(e) =>
-                      setLoginData((prev) => ({
-                        ...prev,
-                        password: e.target.value,
-                      }))
-                    }
-                    className="w-full h-14 px-4 pr-12 border-2 border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-200"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowLoginPassword(!showLoginPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-700"
-                  >
-                    {showLoginPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
+              <div className="relative">
+                <input
+                  type={showLoginPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Enter your password"
+                  value={loginData.password}
+                  onChange={(e) =>
+                    setLoginData((prev) => ({
+                      ...prev,
+                      password: e.target.value,
+                    }))
+                  }
+                  className="w-full h-12 px-4 pr-12 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowLoginPassword(!showLoginPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700"
+                >
+                  {showLoginPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
               </div>
 
               {/* Message Display */}
@@ -565,11 +547,11 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={loginLoading}
-                className="w-full h-14 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-lg rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-12 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-base rounded transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {loginLoading ? (
                   <>
-                    <span className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
                     Logging in...
                   </>
                 ) : (
@@ -577,6 +559,7 @@ const Signup = () => {
                 )}
               </button>
             </form>
+            </div>
           </div>
         </div>
       </div>

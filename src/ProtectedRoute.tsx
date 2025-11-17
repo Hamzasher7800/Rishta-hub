@@ -17,9 +17,9 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     );
   }
 
-  // ✅ agar user login nahi to redirect to login page
+  // ✅ agar user login nahi to redirect to signup page (landing page)
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // ✅ agar user login hai to page dikhana

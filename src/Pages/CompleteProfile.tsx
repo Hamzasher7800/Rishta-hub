@@ -509,7 +509,7 @@ export default function CompleteProfile() {
       });
 
       alert("🎉 Profile saved successfully!");
-      navigate("/");
+      navigate("/home");
     } catch (err: any) {
       console.error("❌ Error saving profile:", err);
       alert(`Error saving profile: ${err.message}`);

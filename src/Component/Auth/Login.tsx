@@ -131,7 +131,7 @@ const Login = () => {
           position: "top-right",
           autoClose: 1500,
         });
-        setTimeout(() => navigate("/"), 1500);
+        setTimeout(() => navigate("/home"), 1500);
       }
     } catch (error: any) {
       console.error("Login error:", error);

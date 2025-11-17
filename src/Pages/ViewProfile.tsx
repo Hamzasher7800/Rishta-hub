@@ -392,7 +392,7 @@ export default function ViewProfile() {
               "The profile you're looking for doesn't exist or has been removed."}
           </p>
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
             className="px-6 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow"
             value="Return to Home"
           />
