@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // ✅ Firebase Imports
-import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase/firebaseConfig";
 import { doc, setDoc, getDoc, query, collection, where, getDocs } from "firebase/firestore";
 import logo1 from "../../assets/images/RishtaHub__1.png";
@@ -33,7 +33,15 @@ const Signup = () => {
   const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showSignupConfirmPassword, setShowSignupConfirmPassword] = useState(false);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
+  // Check if user is already logged in
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsUserLoggedIn(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Format phone number (remove spaces, dashes, etc.)
   const formatPhoneNumber = (phone: string): string => {
@@ -64,6 +72,13 @@ const Signup = () => {
     e.preventDefault();
     setSignupLoading(true);
     setSignupMessage("");
+
+    // Check if user is already logged in
+    if (isUserLoggedIn) {
+      setSignupMessage("❌ You are already logged in. Please logout first or use the login form below.");
+      setSignupLoading(false);
+      return;
+    }
 
     // Basic validation
     if (!signupData.phoneNumber.trim()) {
@@ -107,7 +122,8 @@ const Signup = () => {
       const phoneSnapshot = await getDocs(phoneQuery);
 
       if (!phoneSnapshot.empty) {
-        setSignupMessage("❌ This WhatsApp number is already registered. Please login instead.");
+        setSignupMessage("❌ This WhatsApp number is already registered. Please use the login form below to sign in.");
+        toast.error("This WhatsApp number is already registered. Please login instead.");
         setSignupLoading(false);
         return;
       }
@@ -131,11 +147,9 @@ const Signup = () => {
         createdAt: new Date().toISOString(),
       });
 
-      // Optional: sign out so user can login again (keeps behavior same as original)
-      await signOut(auth);
-
-      toast.success("✅ Account created successfully! Please login.");
-      setSignupMessage("✅ Account created successfully! Please login below.");
+      // User is already signed in, navigate directly to complete profile
+      toast.success("✅ Account created successfully! Please complete your profile.");
+      setSignupMessage("✅ Account created successfully! Redirecting to profile completion...");
       
       // Clear signup form
       setSignupData({
@@ -143,14 +157,23 @@ const Signup = () => {
         password: "",
         confirmPassword: "",
       });
+
+      // Navigate to complete profile page
+      setTimeout(() => {
+        navigate("/complete-profile");
+      }, 1500);
     } catch (error: any) {
       // Friendly Firebase error messages
-      const friendlyMsg =
-        error?.code === "auth/email-already-in-use"
-          ? "This WhatsApp number is already registered."
-          : error?.code === "auth/weak-password"
-          ? "Password should be at least 6 characters."
-          : error?.message || "An error occurred. Please try again.";
+      let friendlyMsg = "";
+      
+      if (error?.code === "auth/email-already-in-use") {
+        friendlyMsg = "This WhatsApp number is already registered. Please use the login form below to sign in.";
+        toast.error("This WhatsApp number is already registered. Please login instead.");
+      } else if (error?.code === "auth/weak-password") {
+        friendlyMsg = "Password should be at least 6 characters.";
+      } else {
+        friendlyMsg = error?.message || "An error occurred. Please try again.";
+      }
 
       setSignupMessage("❌ " + friendlyMsg);
     } finally {
