@@ -237,7 +237,7 @@ const occupationOptions = [
   "Retired",
   "Home Maker / House Wife",
   "Agricultural / Farming",
-  "Unemployed",
+  "Not Working",
 ];
 
 // Father Occupation options
@@ -253,7 +253,7 @@ const fatherOccupationOptions = [
   "Retired",
   "Home Maker / House Wife",
   "Agricultural / Farming",
-  "Unemployed",
+  "Not Working",
   "Late",
 ];
 
@@ -270,7 +270,7 @@ const motherOccupationOptions = [
   "Retired",
   "Home Maker / House Wife",
   "Agricultural / Farming",
-  "Unemployed",
+  "Not Working",
   "Late",
 ];
 

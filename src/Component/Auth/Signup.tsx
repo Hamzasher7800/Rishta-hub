@@ -378,10 +378,10 @@ const Signup = () => {
                 </div>
                 <div className="flex items-start gap-2">
                   <p className="text-xs text-gray-700 flex-1">
-                    Enter your WhatsApp number in the box below and press NEXT button
+                    Enter your WhatsApp number and password in the box below and press NEXT button
                   </p>
                   <p className="text-xs text-gray-700 flex-1 text-right">
-                    نیچے دیے گئے خانے میں اپنا وٹس ایپ نمبر درج کریں اور NEXT کا بٹن دبائیں۔
+                    نیچے دیے گئے خانے میں اپنا وٹس ایپ نمبر اور پاسورڈ لکھیں اور NEXT کا بٹن دبائیں
                   </p>
                 </div>
               </div>
