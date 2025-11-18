@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // ✅ Firebase Imports
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase/firebaseConfig";
 import { doc, setDoc, getDoc, query, collection, where, getDocs } from "firebase/firestore";
 import logo1 from "../../assets/images/RishtaHub__1.png";
@@ -15,13 +15,14 @@ const Signup = () => {
 
   // Signup form state
   const [signupData, setSignupData] = useState({
+    countryCode: "+92",
     phoneNumber: "",
     password: "",
-    confirmPassword: "",
   });
 
   // Login form state
   const [loginData, setLoginData] = useState({
+    countryCode: "+92",
     phoneNumber: "",
     password: "",
   });
@@ -31,40 +32,64 @@ const Signup = () => {
   const [signupMessage, setSignupMessage] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
   const [showSignupPassword, setShowSignupPassword] = useState(false);
-  const [showSignupConfirmPassword, setShowSignupConfirmPassword] = useState(false);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  // Check if user is already logged in
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsUserLoggedIn(!!user);
-    });
-    return () => unsubscribe();
-  }, []);
+  // Country codes for specified countries
+  const countryCodes = [
+    { code: "+92", country: "Pakistan" },
+    { code: "+91", country: "India" },
+    { code: "+966", country: "Saudi Arabia" },
+    { code: "+971", country: "United Arab Emirates (UAE)" },
+    { code: "+974", country: "Qatar" },
+    { code: "+968", country: "Oman" },
+    { code: "+965", country: "Kuwait" },
+    { code: "+60", country: "Malaysia" },
+    { code: "+82", country: "South Korea" },
+    { code: "+27", country: "South Africa" },
+    { code: "+81", country: "Japan" },
+    { code: "+90", country: "Turkey" },
+    { code: "+44", country: "United Kingdom (UK)" },
+    { code: "+1", country: "Canada" },
+    { code: "+49", country: "Germany" },
+    { code: "+39", country: "Italy" },
+    { code: "+61", country: "Australia" },
+    { code: "+1", country: "United States (USA)" },
+    { code: "+86", country: "China" },
+    { code: "+46", country: "Sweden" },
+    { code: "+34", country: "Spain" },
+    { code: "+33", country: "France" },
+    { code: "+47", country: "Norway" },
+    { code: "+45", country: "Denmark" },
+    { code: "+351", country: "Portugal" },
+    { code: "+32", country: "Belgium" },
+    { code: "+30", country: "Greece" },
+    { code: "+353", country: "Ireland" },
+    { code: "+41", country: "Switzerland" },
+    { code: "+48", country: "Poland" },
+  ];
 
   // Format phone number (remove spaces, dashes, etc.)
-  const formatPhoneNumber = (phone: string): string => {
+  const formatPhoneNumber = (phone: string, countryCode: string): string => {
     // Remove all non-digit characters except +
     let cleaned = phone.replace(/[^\d+]/g, "");
     
-    // If it doesn't start with +, assume it's a Pakistani number and add +92
+    // If it doesn't start with +, add the country code
     if (!cleaned.startsWith("+")) {
       // Remove leading 0 if present
       if (cleaned.startsWith("0")) {
         cleaned = cleaned.substring(1);
       }
-      cleaned = "+92" + cleaned;
+      cleaned = countryCode + cleaned;
     }
     
     return cleaned;
   };
 
   // Validate phone number
-  const isValidPhoneNumber = (phone: string): boolean => {
-    const cleaned = formatPhoneNumber(phone);
-    // Pakistani phone number format: +92XXXXXXXXXX (10 digits after +92)
-    const phoneRegex = /^\+92\d{10}$/;
+  const isValidPhoneNumber = (phone: string, countryCode: string): boolean => {
+    const cleaned = formatPhoneNumber(phone, countryCode);
+    // Basic validation: should start with + and have at least 7 digits after country code
+    const phoneRegex = /^\+\d{1,4}\d{7,15}$/;
     return phoneRegex.test(cleaned);
   };
 
@@ -73,13 +98,6 @@ const Signup = () => {
     setSignupLoading(true);
     setSignupMessage("");
 
-    // Check if user is already logged in
-    if (isUserLoggedIn) {
-      setSignupMessage("❌ You are already logged in. Please logout first or use the login form below.");
-      setSignupLoading(false);
-      return;
-    }
-
     // Basic validation
     if (!signupData.phoneNumber.trim()) {
       setSignupMessage("❌ Please enter your WhatsApp number.");
@@ -87,10 +105,10 @@ const Signup = () => {
       return;
     }
 
-    const formattedPhone = formatPhoneNumber(signupData.phoneNumber.trim());
+    const formattedPhone = formatPhoneNumber(signupData.phoneNumber.trim(), signupData.countryCode);
     
-    if (!isValidPhoneNumber(formattedPhone)) {
-      setSignupMessage("❌ Please enter a valid WhatsApp number (e.g., 3218800544).");
+    if (!isValidPhoneNumber(signupData.phoneNumber.trim(), signupData.countryCode)) {
+      setSignupMessage("❌ Please enter a valid WhatsApp number.");
       setSignupLoading(false);
       return;
     }
@@ -103,12 +121,6 @@ const Signup = () => {
 
     if (signupData.password.length < 6) {
       setSignupMessage("❌ Password should be at least 6 characters.");
-      setSignupLoading(false);
-      return;
-    }
-
-    if (signupData.password !== signupData.confirmPassword) {
-      setSignupMessage("❌ Passwords do not match.");
       setSignupLoading(false);
       return;
     }
@@ -153,9 +165,9 @@ const Signup = () => {
       
       // Clear signup form
       setSignupData({
+        countryCode: "+92",
         phoneNumber: "",
         password: "",
-        confirmPassword: "",
       });
 
       // Navigate to complete profile page
@@ -188,9 +200,9 @@ const Signup = () => {
 
     try {
       // Format phone number
-      const formattedPhone = formatPhoneNumber(loginData.phoneNumber.trim());
+      const formattedPhone = formatPhoneNumber(loginData.phoneNumber.trim(), loginData.countryCode);
 
-      if (!formattedPhone || formattedPhone.length < 10) {
+      if (!isValidPhoneNumber(loginData.phoneNumber.trim(), loginData.countryCode)) {
         setLoginMessage("❌ Please enter a valid WhatsApp number.");
         setLoginLoading(false);
         return;
@@ -341,11 +353,11 @@ const Signup = () => {
             </div>
             
             {/* Welcome Text */}
-            <p className="text-xs font-medium text-gray-600 mb-1">WELCOME TO</p>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">
+            <p className="text-xl font-medium text-gray-600 mb-1">WELCOME TO</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-1">
               Rishta Hub
             </h1>
-            <p className="text-xs text-gray-600">
+            <p className="text-xl text-gray-600">
               Genuine People - Real Profiles
             </p>
           </div>
@@ -377,21 +389,32 @@ const Signup = () => {
             <form onSubmit={handleSignup} className="space-y-3">
               {/* WhatsApp Number Input - Two Part */}
               <div className="flex gap-2">
-                {/* Country Code Box */}
-                <div className="w-16">
-                  <input
-                    type="text"
-                    value="+92"
-                    readOnly
-                    className="w-full h-10 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-xs"
-                  />
+                {/* Country Code Dropdown */}
+                <div className="w-24">
+                  <select
+                    name="countryCode"
+                    value={signupData.countryCode}
+                    onChange={(e) =>
+                      setSignupData((prev) => ({
+                        ...prev,
+                        countryCode: e.target.value,
+                      }))
+                    }
+                    className="w-full h-10 px-2 border border-gray-400 rounded bg-white text-gray-800 font-medium text-center text-xs focus:outline-none focus:border-gray-500"
+                  >
+                    {countryCodes.map((cc) => (
+                      <option key={cc.code} value={cc.code}>
+                        {cc.code}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 {/* Phone Number Input */}
                 <div className="flex-1">
                   <input
                     type="tel"
                     name="phoneNumber"
-                    placeholder="3218800544"
+                    placeholder="3xxxxxxxxx"
                     value={signupData.phoneNumber}
                     onChange={(e) =>
                       setSignupData((prev) => ({
@@ -427,37 +450,6 @@ const Signup = () => {
                   className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
                 >
                   {showSignupPassword ? (
-                    <EyeOff className="h-3.5 w-3.5" />
-                  ) : (
-                    <Eye className="h-3.5 w-3.5" />
-                  )}
-                </button>
-              </div>
-
-              {/* Confirm Password Input */}
-              <div className="relative">
-                <input
-                  type={showSignupConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="Confirm your password"
-                  value={signupData.confirmPassword}
-                  onChange={(e) =>
-                    setSignupData((prev) => ({
-                      ...prev,
-                      confirmPassword: e.target.value,
-                    }))
-                  }
-                  className="w-full h-10 px-3 pr-10 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-xs focus:outline-none focus:border-gray-500"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() =>
-                    setShowSignupConfirmPassword(!showSignupConfirmPassword)
-                  }
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
-                >
-                  {showSignupConfirmPassword ? (
                     <EyeOff className="h-3.5 w-3.5" />
                   ) : (
                     <Eye className="h-3.5 w-3.5" />
@@ -513,21 +505,32 @@ const Signup = () => {
             <form onSubmit={handleLogin} className="space-y-3">
               {/* WhatsApp Number Input - Two Part */}
               <div className="flex gap-2">
-                {/* Country Code Box */}
-                <div className="w-16">
-                  <input
-                    type="text"
-                    value="+92"
-                    readOnly
-                    className="w-full h-10 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-xs"
-                  />
+                {/* Country Code Dropdown */}
+                <div className="w-24">
+                  <select
+                    name="countryCode"
+                    value={loginData.countryCode}
+                    onChange={(e) =>
+                      setLoginData((prev) => ({
+                        ...prev,
+                        countryCode: e.target.value,
+                      }))
+                    }
+                    className="w-full h-10 px-2 border border-gray-400 rounded bg-white text-gray-800 font-medium text-center text-xs focus:outline-none focus:border-gray-500"
+                  >
+                    {countryCodes.map((cc) => (
+                      <option key={cc.code} value={cc.code}>
+                        {cc.code}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 {/* Phone Number Input */}
                 <div className="flex-1">
                   <input
                     type="tel"
                     name="phoneNumber"
-                    placeholder="3218800544"
+                    placeholder="3xxxxxxxxx"
                     value={loginData.phoneNumber}
                     onChange={(e) =>
                       setLoginData((prev) => ({
