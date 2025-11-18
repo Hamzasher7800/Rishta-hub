@@ -308,42 +308,59 @@ const Signup = () => {
       </div>
 
       {/* Right Side - Form Section with Signup and Login */}
-      <div className="flex-1 flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
-        <div className="w-full max-w-2xl">
+      <div className="flex-1 flex flex-col items-center justify-center p-4 lg:p-6 overflow-y-auto">
+        <div className="w-full max-w-md">
+          {/* Welcome Section */}
+          <div className="text-center mb-4">
+            {/* Logo - Same as left side */}
+            <div className="flex justify-center mb-2">
+              <img src={logo1} alt="RishtaHub" className="w-[120px] h-auto" />
+            </div>
+            
+            {/* Welcome Text */}
+            <p className="text-xs font-medium text-gray-600 mb-1">WELCOME TO</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">
+              Rishta Hub
+            </h1>
+            <p className="text-xs text-gray-600">
+              Genuine People - Real Profiles
+            </p>
+          </div>
+
           {/* Single Card with Both Forms */}
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4 shadow-sm">
             {/* Registration Section */}
-            <div className="mb-8">
+            <div className="mb-4">
               {/* Bilingual Header */}
-              <div className="mb-6">
-                <div className="flex items-start gap-3 mb-2">
-                  <h2 className="text-base font-semibold text-black leading-tight flex-1">
+              <div className="mb-3">
+                <div className="flex items-start gap-2 mb-1">
+                  <h2 className="text-xs font-semibold text-black leading-tight flex-1">
                     Register your profile if you are new to this platform
                   </h2>
-                  <p className="text-base text-black leading-tight flex-1 text-right">
+                  <p className="text-xs text-black leading-tight flex-1 text-right">
                     اگر آپ اس پلیٹ فارم پر نئے ہیں تو اپنا پروفائل رجسٹر کریں
                   </p>
                 </div>
-                <div className="flex items-start gap-3">
-                  <p className="text-sm text-gray-700 flex-1">
+                <div className="flex items-start gap-2">
+                  <p className="text-xs text-gray-700 flex-1">
                     Enter your WhatsApp number in the box below and press NEXT button
                   </p>
-                  <p className="text-sm text-gray-700 flex-1 text-right">
+                  <p className="text-xs text-gray-700 flex-1 text-right">
                     نیچے دیے گئے خانے میں اپنا وٹس ایپ نمبر درج کریں اور NEXT کا بٹن دبائیں۔
                   </p>
                 </div>
               </div>
 
-            <form onSubmit={handleSignup} className="space-y-4">
+            <form onSubmit={handleSignup} className="space-y-3">
               {/* WhatsApp Number Input - Two Part */}
               <div className="flex gap-2">
                 {/* Country Code Box */}
-                <div className="w-20">
+                <div className="w-16">
                   <input
                     type="text"
                     value="+92"
                     readOnly
-                    className="w-full h-12 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-sm"
+                    className="w-full h-10 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-xs"
                   />
                 </div>
                 {/* Phone Number Input */}
@@ -359,7 +376,7 @@ const Signup = () => {
                         phoneNumber: e.target.value,
                       }))
                     }
-                    className="w-full h-12 px-4 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                    className="w-full h-10 px-3 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-xs focus:outline-none focus:border-gray-500"
                     required
                   />
                 </div>
@@ -378,18 +395,18 @@ const Signup = () => {
                       password: e.target.value,
                     }))
                   }
-                  className="w-full h-12 px-4 pr-12 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                  className="w-full h-10 px-3 pr-10 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-xs focus:outline-none focus:border-gray-500"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowSignupPassword(!showSignupPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
                 >
                   {showSignupPassword ? (
-                    <EyeOff className="h-4 w-4" />
+                    <EyeOff className="h-3.5 w-3.5" />
                   ) : (
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3.5 w-3.5" />
                   )}
                 </button>
               </div>
@@ -407,7 +424,7 @@ const Signup = () => {
                       confirmPassword: e.target.value,
                     }))
                   }
-                  className="w-full h-12 px-4 pr-12 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                  className="w-full h-10 px-3 pr-10 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-xs focus:outline-none focus:border-gray-500"
                   required
                 />
                 <button
@@ -415,12 +432,12 @@ const Signup = () => {
                   onClick={() =>
                     setShowSignupConfirmPassword(!showSignupConfirmPassword)
                   }
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
                 >
                   {showSignupConfirmPassword ? (
-                    <EyeOff className="h-4 w-4" />
+                    <EyeOff className="h-3.5 w-3.5" />
                   ) : (
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3.5 w-3.5" />
                   )}
                 </button>
               </div>
@@ -428,7 +445,7 @@ const Signup = () => {
               {/* Message Display */}
               {signupMessage && (
                 <div
-                  className={`p-3 rounded-lg text-sm font-medium ${
+                  className={`p-2 rounded text-xs font-medium ${
                     signupMessage.startsWith("✅")
                       ? "bg-green-50 border border-green-200 text-green-700"
                       : "bg-red-50 border border-red-200 text-red-700"
@@ -442,11 +459,11 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={signupLoading}
-                className="w-full h-12 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-base rounded transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="w-full h-10 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm rounded transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {signupLoading ? (
                   <>
-                    <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                    <span className="h-3 w-3 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
                     Creating...
                   </>
                 ) : (
@@ -457,29 +474,29 @@ const Signup = () => {
             </div>
 
             {/* Login Section */}
-            <div className="mt-8">
+            <div className="mt-4">
               {/* Bilingual Header */}
-              <div className="mb-6">
-                <div className="flex items-start gap-3">
-                  <h2 className="text-base font-semibold text-black leading-tight flex-1">
+              <div className="mb-3">
+                <div className="flex items-start gap-2">
+                  <h2 className="text-xs font-semibold text-black leading-tight flex-1">
                     If you are already registered on this platform, Enter your WhatsApp number and press LOG IN button
                   </h2>
-                  <p className="text-base text-black leading-tight flex-1 text-right">
+                  <p className="text-xs text-black leading-tight flex-1 text-right">
                     اگر آپ پلیٹ فارم پر پہلے سے رجسٹرڈ ہیں تو اپنا وٹس ایپ نمبر لکھیں اور LOG IN کا بٹن دبائیں
                   </p>
                 </div>
               </div>
 
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-3">
               {/* WhatsApp Number Input - Two Part */}
               <div className="flex gap-2">
                 {/* Country Code Box */}
-                <div className="w-20">
+                <div className="w-16">
                   <input
                     type="text"
                     value="+92"
                     readOnly
-                    className="w-full h-12 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-sm"
+                    className="w-full h-10 px-2 border border-gray-400 rounded bg-gray-200 text-gray-800 font-medium text-center cursor-not-allowed text-xs"
                   />
                 </div>
                 {/* Phone Number Input */}
@@ -495,7 +512,7 @@ const Signup = () => {
                         phoneNumber: e.target.value,
                       }))
                     }
-                    className="w-full h-12 px-4 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                    className="w-full h-10 px-3 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-xs focus:outline-none focus:border-gray-500"
                     required
                   />
                 </div>
@@ -514,18 +531,18 @@ const Signup = () => {
                       password: e.target.value,
                     }))
                   }
-                  className="w-full h-12 px-4 pr-12 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-500"
+                  className="w-full h-10 px-3 pr-10 border border-gray-400 rounded bg-white text-gray-800 placeholder-gray-500 text-xs focus:outline-none focus:border-gray-500"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowLoginPassword(!showLoginPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
                 >
                   {showLoginPassword ? (
-                    <EyeOff className="h-4 w-4" />
+                    <EyeOff className="h-3.5 w-3.5" />
                   ) : (
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3.5 w-3.5" />
                   )}
                 </button>
               </div>
@@ -533,7 +550,7 @@ const Signup = () => {
               {/* Message Display */}
               {loginMessage && (
                 <div
-                  className={`p-3 rounded-lg text-sm font-medium ${
+                  className={`p-2 rounded text-xs font-medium ${
                     loginMessage.startsWith("✅")
                       ? "bg-green-50 border border-green-200 text-green-700"
                       : "bg-red-50 border border-red-200 text-red-700"
@@ -547,11 +564,11 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={loginLoading}
-                className="w-full h-12 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-base rounded transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="w-full h-10 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm rounded transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {loginLoading ? (
                   <>
-                    <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                    <span className="h-3 w-3 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
                     Logging in...
                   </>
                 ) : (

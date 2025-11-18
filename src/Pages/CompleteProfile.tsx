@@ -19,6 +19,7 @@ import Button from "../Component/Common/Button";
 // Updated Country data for dropdown
 const countries = [
   "Pakistan",
+  "India",
   "Saudi Arabia",
   "United Arab Emirates (UAE)",
   "Qatar",
@@ -26,19 +27,27 @@ const countries = [
   "Kuwait",
   "Malaysia",
   "South Korea",
+  "South Africa",
   "Japan",
-  "China",
   "Turkey",
   "United Kingdom (UK)",
-  "United States (USA)",
   "Canada",
-  "Australia",
-  "Italy",
-  "Spain",
   "Germany",
+  "Italy",
+  "Australia",
+  "United States (USA)",
+  "China",
+  "Sweden",
+  "Spain",
+  "France",
   "Norway",
+  "Denmark",
+  "Portugal",
+  "Belgium",
   "Greece",
-  "India",
+  "Ireland",
+  "Switzerland",
+  "Poland",
 ];
 
 // City data for different countries
@@ -53,22 +62,52 @@ const cityData: { [key: string]: string[] } = {
     "Peshawar",
     "Quetta",
     "Sialkot",
+    "Gujranwala",
+    "Sargodha",
+    "Bahawalpur",
+    "Swat (Mingora)",
+    "Hyderabad",
+    "Vehari",
+    "Mirpur (Azad Kashmir)",
+    "Abbottabad",
+    "Rahim Yar Khan",
+    "Sheikhupura",
+    "Dera Ghazi Khan",
+  ],
+  India: [
+    "New Delhi",
+    "Mumbai",
+    "Kolkata",
+    "Bengaluru",
+    "Chennai",
   ],
   "Saudi Arabia": ["Riyadh", "Jeddah", "Mecca", "Medina", "Dammam"],
   "United Arab Emirates (UAE)": [
     "Dubai",
     "Abu Dhabi",
     "Sharjah",
-    "Al Ain",
     "Ajman",
+    "Ras Al Khaimah",
   ],
-  Qatar: ["Doha", "Al Rayyan", "Umm Salal", "Al Wakrah", "Al Khor"],
+  Qatar: ["Doha", "Al Wakrah", "Al Khor", "Al Rayyan", "Lusail"],
   Oman: ["Muscat", "Salalah", "Sohar", "Nizwa", "Sur"],
-  Kuwait: ["Kuwait City", "Hawalli", "Farwaniya", "Ahmadi", "Jahra"],
-  Malaysia: ["Kuala Lumpur", "Penang", "Johor Bahru", "Ipoh", "Malacca"],
+  Kuwait: ["Kuwait City", "Hawalli", "Salmiya", "Al Ahmadi", "Farwaniya"],
+  Malaysia: [
+    "Kuala Lumpur",
+    "George Town (Penang)",
+    "Johor Bahru",
+    "Kota Kinabalu",
+    "Malacca",
+  ],
   "South Korea": ["Seoul", "Busan", "Incheon", "Daegu", "Daejeon"],
-  Japan: ["Tokyo", "Osaka", "Kyoto", "Yokohama", "Nagoya"],
-  China: ["Beijing", "Shanghai", "Guangzhou", "Shenzhen", "Chengdu"],
+  "South Africa": [
+    "Johannesburg",
+    "Cape Town",
+    "Durban",
+    "Pretoria",
+    "Port Elizabeth",
+  ],
+  Japan: ["Tokyo", "Osaka", "Kyoto", "Yokohama", "Sapporo"],
   Turkey: ["Istanbul", "Ankara", "Izmir", "Bursa", "Antalya"],
   "United Kingdom (UK)": [
     "London",
@@ -77,122 +116,236 @@ const cityData: { [key: string]: string[] } = {
     "Liverpool",
     "Glasgow",
   ],
+  Canada: ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa"],
+  Germany: ["Berlin", "Munich", "Frankfurt", "Hamburg", "Cologne"],
+  Italy: ["Rome", "Milan", "Venice", "Florence", "Naples"],
+  Australia: ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
   "United States (USA)": [
     "New York",
     "Los Angeles",
     "Chicago",
     "Houston",
-    "Phoenix",
+    "Miami",
   ],
-  Canada: ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa"],
-  Australia: ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
-  Italy: ["Rome", "Milan", "Naples", "Turin", "Palermo"],
-  Spain: ["Madrid", "Barcelona", "Valencia", "Seville", "Zaragoza"],
-  Germany: ["Berlin", "Hamburg", "Munich", "Cologne", "Frankfurt"],
-  Norway: ["Oslo", "Bergen", "Stavanger", "Trondheim", "Drammen"],
+  China: ["Beijing", "Shanghai", "Guangzhou", "Shenzhen", "Chengdu"],
+  Sweden: ["Stockholm", "Gothenburg", "Malmö", "Uppsala", "Västerås"],
+  Spain: ["Madrid", "Barcelona", "Valencia", "Seville", "Bilbao"],
+  France: ["Paris", "Lyon", "Marseille", "Nice", "Toulouse"],
+  Norway: ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"],
+  Denmark: ["Copenhagen", "Aarhus", "Odense", "Aalborg", "Esbjerg"],
+  Portugal: ["Lisbon", "Porto", "Braga", "Coimbra", "Faro"],
+  Belgium: ["Brussels", "Antwerp", "Ghent", "Bruges", "Liège"],
   Greece: ["Athens", "Thessaloniki", "Patras", "Heraklion", "Larissa"],
-  India: ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai"],
+  Ireland: ["Dublin", "Cork", "Limerick", "Galway", "Waterford"],
+  Switzerland: ["Zurich", "Geneva", "Basel", "Bern", "Lausanne"],
+  Poland: ["Warsaw", "Kraków", "Gdańsk", "Wrocław", "Poznań"],
 };
 
-// Height options for dropdown (4'0" to 6'5" with half inch increments)
+// Height options for dropdown (4'-0" to 6'-5" with whole inch increments)
 const heightOptions = [
-  "4'0\"",
-  "4'0.5\"",
-  "4'1\"",
-  "4'1.5\"",
-  "4'2\"",
-  "4'2.5\"",
-  "4'3\"",
-  "4'3.5\"",
-  "4'4\"",
-  "4'4.5\"",
-  "4'5\"",
-  "4'5.5\"",
-  "4'6\"",
-  "4'6.5\"",
-  "4'7\"",
-  "4'7.5\"",
-  "4'8\"",
-  "4'8.5\"",
-  "4'9\"",
-  "4'9.5\"",
-  "4'10\"",
-  "4'10.5\"",
-  "4'11\"",
-  "4'11.5\"",
-  "5'0\"",
-  "5'0.5\"",
-  "5'1\"",
-  "5'1.5\"",
-  "5'2\"",
-  "5'2.5\"",
-  "5'3\"",
-  "5'3.5\"",
-  "5'4\"",
-  "5'4.5\"",
-  "5'5\"",
-  "5'5.5\"",
-  "5'6\"",
-  "5'6.5\"",
-  "5'7\"",
-  "5'7.5\"",
-  "5'8\"",
-  "5'8.5\"",
-  "5'9\"",
-  "5'9.5\"",
-  "5'10\"",
-  "5'10.5\"",
-  "5'11\"",
-  "5'11.5\"",
-  "6'0\"",
-  "6'0.5\"",
-  "6'1\"",
-  "6'1.5\"",
-  "6'2\"",
-  "6'2.5\"",
-  "6'3\"",
-  "6'3.5\"",
-  "6'4\"",
-  "6'4.5\"",
-  "6'5\"",
+  "4'-0\"",
+  "4'-1\"",
+  "4'-2\"",
+  "4'-3\"",
+  "4'-4\"",
+  "4'-5\"",
+  "4'-6\"",
+  "4'-7\"",
+  "4'-8\"",
+  "4'-9\"",
+  "4'-10\"",
+  "4'-11\"",
+  "5'-0\"",
+  "5'-1\"",
+  "5'-2\"",
+  "5'-3\"",
+  "5'-4\"",
+  "5'-5\"",
+  "5'-6\"",
+  "5'-7\"",
+  "5'-8\"",
+  "5'-9\"",
+  "5'-10\"",
+  "5'-11\"",
+  "6'-0\"",
+  "6'-1\"",
+  "6'-2\"",
+  "6'-3\"",
+  "6'-4\"",
+  "6'-5\"",
 ];
 
-// Occupation options for dropdown
-const occupationOptions = [
-  "Accountant",
-  "Actor",
-  "Architect",
-  "Artist",
-  "Banker",
-  "Business Owner",
-  "Chef",
-  "Civil Servant",
-  "Doctor",
-  "Engineer",
-  "Farmer",
-  "Graphic Designer",
-  "Hotel Manager",
-  "IT Professional",
-  "Journalist",
-  "Lawyer",
-  "Lecturer",
-  "Marketing Manager",
-  "Nurse",
-  "Pharmacist",
-  "Pilot",
-  "Police Officer",
-  "Professor",
-  "Real Estate Agent",
-  "Sales Manager",
-  "Scientist",
-  "Software Developer",
-  "Teacher",
-  "Web Developer",
-  "Student",
-  "Homemaker",
-  "Retired",
-  "Unemployed",
+// Qualification options for dropdown
+const qualificationOptions = [
+  "Under Matric",
+  "Matric Arts",
+  "Matric Science",
+  "FA - Faculty of Arts",
+  "FSc - Pre Medical",
+  "FSc - Pre Engineering",
+  "BA - Bachelor of Arts",
+  "BSc - Bachelor of Science",
+  "BCom - Bachelor of Commerce",
+  "BBA - Bachelor of Business Administration",
+  "BSCS - Bachelor of Computer Science",
+  "BIT - Bachelor of Information Technology",
+  "BE / BTech - Bachelor of Engineering / Technology",
+  "MBBS - Bachelor of Medicine, Bachelor of Surgery",
+  "BDS - Bachelor of Dental Surgery",
+  "BPharm - Bachelor of Pharmacy",
+  "BArch - Bachelor of Architecture",
+  "BEd - Bachelor of Education",
+  "LLB - Bachelor of Law",
+  "DPT – Doctor of Physical Therapy",
+  "BS Aviation / Aeronautical Engineering",
+  "BS Psychology",
+  "BS Mass Communication",
+  "BS - IT",
+  "ICMA – Cost & Management Accounting",
+  "MA - Master of Arts",
+  "MSc - Master of Science",
+  "MBA - Master of Business Administration",
+  "MCS - Master of Computer Science",
+  "MIT - Master of Information Technology",
+  "MEng - Master of Engineering",
+  "MPH - Master of Public Health",
+  "MArch - Master in Architecture",
+  "MEd - Master of Education",
+  "LLM - Master of Laws",
+  "CA - Chartered Accountant",
+  "ACCA - Association of Chartered Certified Accountants",
+  "CFA - Chartered Financial Analyst",
+  "BE / BS Civil Engineering",
+  "BE / BS Mechanical Engineering",
+  "BE / BS Electrical Engineering",
+  "BE / BS Chemical Engineering",
+  "MD - FCPS",
+  "DDM - FCPS",
+  "PhD - Doctor of Philosophy – all disciplines",
   "Other",
+];
+
+// Profession/Occupation options for dropdown
+const occupationOptions = [
+  "Govt Service (BPS 1-14)",
+  "Govt Service (BPS 16-22)",
+  "Private Job - Middle. Standard",
+  "Private Job - Executive Class",
+  "Self Employed - Business Owner",
+  "Family Business",
+  "Freelander / Consultant",
+  "Retired",
+  "Home Maker / House Wife",
+  "Agricultural / Farming",
+  "Unemployed",
+];
+
+// Father Occupation options
+const fatherOccupationOptions = [
+  "Govt Service (BPS 1-14)",
+  "Govt Service (BPS 16-22)",
+  "Private Job - Middle. Standard",
+  "Private Job - Executive Class",
+  "Self Employed - Business Owner",
+  "Family Business",
+  "Freelander / Consultant",
+  "E-commerce",
+  "Retired",
+  "Home Maker / House Wife",
+  "Agricultural / Farming",
+  "Unemployed",
+  "Late",
+];
+
+// Mother Occupation options
+const motherOccupationOptions = [
+  "Govt Service (BPS 1-14)",
+  "Govt Service (BPS 16-22)",
+  "Private Job - Middle. Standard",
+  "Private Job - Executive Class",
+  "Self Employed - Business Owner",
+  "Family Business",
+  "E-Commerce",
+  "Freelander / Consultant",
+  "Retired",
+  "Home Maker / House Wife",
+  "Agricultural / Farming",
+  "Unemployed",
+  "Late",
+];
+
+// Contact Person Relation options
+const contactPersonRelationOptions = [
+  "Father",
+  "Mother",
+  "Brother",
+  "Sister",
+  "Relative",
+  "Friend",
+  "Other",
+];
+
+// Religion options
+const religionOptions = [
+  "Islam",
+  "Christianity",
+  "Hinduism",
+  "Describe your Religion",
+];
+
+// Sect options based on religion
+const getSectOptions = (religion: string) => {
+  switch (religion) {
+    case "Islam":
+      return [
+        "Barelvi / Ahle Sunnat wal Jama'at",
+        "Deobandi",
+        "Ahl-e-Hadith",
+        "Hanafi",
+        "Shafi",
+        "Hambli",
+        "Malki",
+        "Tablighi Jamaat",
+        "Qadri",
+        "Chishti",
+        "Naqshbandi",
+        "Soharwardi",
+        "Ansari",
+        "Imamia / Jaafri",
+        "Zaidi",
+        "Ismaili (Aga Khani)",
+        "Dawoodi Bohra",
+      ];
+    case "Christianity":
+      return [
+        "Catholic",
+        "Presbyterian",
+        "Protestant",
+        "Baptist",
+        "Orthodoxies",
+      ];
+    case "Hinduism":
+      return [
+        "Vaishnavis",
+        "Shaivisi",
+        "Shaktismi",
+        "Smartismi",
+        "Brahmk",
+        "Arya Samaj",
+      ];
+    case "Describe your Religion":
+      return []; // Will show text box instead
+    default:
+      return [];
+  }
+};
+
+// House status options
+const houseStatusOptions = [
+  "Owned",
+  "Rented",
+  "Family Owned",
+  "Govt Residence",
 ];
 
 // Sibling options for dropdown (1 to 9)
@@ -204,78 +357,29 @@ const castOptions = [
   "Rajput",
   "Arain",
   "Gujjar",
-  "Awan",
-  "Syed",
-  "Buttar",
   "Sheikh",
-  "Pathan",
+  "Syed",
+  "Pathan (Pashtun)",
   "Baloch",
+  "Awan",
+  "Khokhar",
   "Malik",
   "Mughal",
   "Qureshi",
-  "Kashmiri Butt",
-  "Dogar",
-  "Khokhar",
-  "Chauhan",
   "Ansari",
-  "Lodhi",
-  "Qazi",
-  "Niazi",
+  "Hashmi",
+  "Mirza",
+  "Malik Awan",
+  "Kamboh",
+  "Dogar",
+  "Rana",
+  "Butt (Kashmiri)",
+  "Bhatti",
+  "Sial",
+  "Khattak",
+  "Yousafzai",
 ];
 
-// Preferred cast options (includes "Any" and "No preference")
-const preferredCastOptions = [
-  "Any",
-  "Jutt",
-  "Rajput",
-  "Arain",
-  "Buttar",
-  "Gujjar",
-  "Awan",
-  "Syed",
-  "Sheikh",
-  "Pathan",
-  "Baloch",
-  "Malik",
-  "Mughal",
-  "Qureshi",
-  "Kashmiri Butt",
-  "Dogar",
-  "Khokhar",
-  "Chauhan",
-  "Ansari",
-  "Lodhi",
-  "Qazi",
-  "Niazi",
-  "No preference",
-];
-
-// Preferred resident options
-const preferredResidentOptions = [
-  "No preference",
-  "Pakistan",
-  "India",
-  "Saudi Arabia",
-  "United Arab Emirates (UAE)",
-  "Qatar",
-  "Oman",
-  "Kuwait",
-  "Malaysia",
-  "South Korea",
-  "Japan",
-  "China",
-  "Turkey",
-  "United Kingdom (UK)",
-  "United States (USA)",
-  "Canada",
-  "Australia",
-  "Italy",
-  "Spain",
-  "Germany",
-  "Norway",
-  "Greece",
-  "Any",
-];
 
 export default function CompleteProfile() {
   const navigate = useNavigate();
@@ -292,8 +396,10 @@ export default function CompleteProfile() {
     // Personal Details
     maritalStatus: "",
     maritalStatusDescription: "", // For "Describe your Status" option
-    relation: "",
+    religion: "",
+    religionDescription: "", // For "Describe your Religion" option (50 words max)
     sect: "",
+    sectDescription: "", // For "Other" religion sect description
     caste: "",
 
     // Qualification/Profession
@@ -304,6 +410,7 @@ export default function CompleteProfile() {
     country: "",
     currentCity: "",
     house: "",
+    houseStatus: "",
 
     // Family Information
     fatherOccupation: "",
@@ -343,59 +450,6 @@ export default function CompleteProfile() {
     return cityData[country] || [];
   };
 
-  // Get sect options based on selected religion
-  const getSectOptions = (religion: string) => {
-    switch (religion) {
-      case "Muslim":
-        return [
-          "No Sect - Prefer to be Muslim Only",
-          "Barelvi",
-          "SHIA",
-          "Deobandi",
-          "Ahl-i Hadith",
-          "Hanafi",
-          "Tablighi Jamaat",
-          "Wahhabi",
-          "Chishti",
-          "Naqshbandi",
-          "Qadiri",
-          "Suhrawardi",
-          "Maliki",
-          "Shafi'i",
-          "Hanbali",
-          "Imamia/Jaafry",
-          "Ismailis (Aga Khanis)",
-          "Dawoodi Bohras",
-          "Sulaymani Bohras",
-          "Zaydi",
-          "Alvi",
-          "Hazara",
-          "Other",
-        ];
-      case "Christian":
-        return [
-          "Catholic",
-          "Protestant",
-          "Presbyterian",
-          "Methodist",
-          "Pentecostal",
-          "Seventh-day Adventist",
-          "Orthodox",
-          "Salvation Army",
-        ];
-      case "Hindu":
-        return [
-          "Hindu",
-          "Vaishnavism",
-          "Shaivism",
-          "Shaktism",
-          "Smartism",
-          "Ganapatya",
-        ];
-      default:
-        return ["Other"];
-    }
-  };
 
   const handleProfileChange = (
     e: React.ChangeEvent<
@@ -413,6 +467,13 @@ export default function CompleteProfile() {
       // Reset marital status description when marital status changes
       if (name === "maritalStatus" && value !== "Describe your Status") {
         updatedData.maritalStatusDescription = "";
+      }
+
+      // Reset religion description and sect when religion changes
+      if (name === "religion") {
+        updatedData.religionDescription = "";
+        updatedData.sect = "";
+        updatedData.sectDescription = "";
       }
 
       // Reset city when country changes
@@ -435,10 +496,24 @@ export default function CompleteProfile() {
     >
   ) => {
     const { name, value } = e.target;
-    setPartnerPrefs((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setPartnerPrefs((prev) => {
+      const updated = {
+        ...prev,
+        [name]: value,
+      };
+      
+      // Reset preferred sect when preferred religion changes
+      if (name === "preferredReligion") {
+        updated.preferredSect = "";
+      }
+      
+      // Reset preferred city when preferred country changes
+      if (name === "preferredCountry") {
+        updated.preferredCity = "";
+      }
+      
+      return updated;
+    });
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -486,6 +561,15 @@ export default function CompleteProfile() {
       !profileData.maritalStatusDescription.trim()
     ) {
       alert("Please describe your marital status.");
+      return;
+    }
+
+    // Validate religion description if "Describe your Religion" is selected
+    if (
+      profileData.religion === "Describe your Religion" &&
+      !profileData.religionDescription.trim()
+    ) {
+      alert("Please describe your religion.");
       return;
     }
 
@@ -770,40 +854,88 @@ export default function CompleteProfile() {
                       </div>
                     )}
 
-                    {/* Relation */}
+                    {/* Religion */}
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700">
-                        Relation
-                      </label>
-                      <input
-                        type="text"
-                        name="relation"
-                        value={profileData.relation}
-                        onChange={handleProfileChange}
-                        placeholder="Enter relation"
-                        className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
-                      />
-                    </div>
-
-                    {/* Sect */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
-                        Sect
+                        Religion
                       </label>
                       <select
-                        name="sect"
-                        value={profileData.sect}
+                        name="religion"
+                        value={profileData.religion}
                         onChange={handleProfileChange}
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
-                        <option value="">Select Sect</option>
-                        {getSectOptions("Muslim").map((sect) => (
-                          <option key={sect} value={sect}>
-                            {sect}
+                        <option value="">Select Religion</option>
+                        {religionOptions.map((religion) => (
+                          <option key={religion} value={religion}>
+                            {religion}
                           </option>
                         ))}
                       </select>
                     </div>
+
+                    {/* Religion Description - Show when "Describe your Religion" is selected */}
+                    {profileData.religion === "Describe your Religion" && (
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">
+                          Describe your Religion <span className="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          name="religionDescription"
+                          value={profileData.religionDescription}
+                          onChange={handleProfileChange}
+                          placeholder="Describe your religion (up to 50 words)"
+                          maxLength={250}
+                          rows={3}
+                          className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 resize-none"
+                          required
+                        />
+                        <p className="text-xs text-gray-500">
+                          {profileData.religionDescription.length}/250 characters (approximately 50 words)
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Sect */}
+                    {profileData.religion && 
+                     profileData.religion !== "Describe your Religion" && 
+                     getSectOptions(profileData.religion).length > 0 && (
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">
+                          Sect
+                        </label>
+                        <select
+                          name="sect"
+                          value={profileData.sect}
+                          onChange={handleProfileChange}
+                          className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
+                        >
+                          <option value="">Select Sect</option>
+                          {getSectOptions(profileData.religion).map((sect) => (
+                            <option key={sect} value={sect}>
+                              {sect}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Sect Description - Show when "Describe your Religion" is selected */}
+                    {profileData.religion === "Describe your Religion" && (
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">
+                          Describe your Sect
+                        </label>
+                        <textarea
+                          name="sectDescription"
+                          value={profileData.sectDescription}
+                          onChange={handleProfileChange}
+                          placeholder="Describe your sect"
+                          rows={2}
+                          className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 resize-none"
+                        />
+                      </div>
+                    )}
 
                     {/* Cast */}
                     <div className="space-y-2">
@@ -849,12 +981,11 @@ export default function CompleteProfile() {
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
                         <option value="">Select Qualification</option>
-                        <option value="Matric">Matric</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Bachelor">Bachelor's</option>
-                        <option value="Master">Master's</option>
-                        <option value="PhD">PhD</option>
-                        <option value="Other">Other</option>
+                        {qualificationOptions.map((qual) => (
+                          <option key={qual} value={qual}>
+                            {qual}
+                          </option>
+                        ))}
                       </select>
                     </div>
 
@@ -931,19 +1062,24 @@ export default function CompleteProfile() {
                       </select>
                     </div>
 
-                    {/* House */}
+                    {/* House Status */}
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700">
-                        House
+                        House Status
                       </label>
-                      <input
-                        type="text"
-                        name="house"
-                        value={profileData.house}
+                      <select
+                        name="houseStatus"
+                        value={profileData.houseStatus}
                         onChange={handleProfileChange}
-                        placeholder="Enter house details"
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
-                      />
+                      >
+                        <option value="">Select House Status</option>
+                        {houseStatusOptions.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -968,7 +1104,7 @@ export default function CompleteProfile() {
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
                         <option value="">Select Occupation</option>
-                        {occupationOptions.map((occupation) => (
+                        {fatherOccupationOptions.map((occupation) => (
                           <option key={occupation} value={occupation}>
                             {occupation}
                           </option>
@@ -988,7 +1124,7 @@ export default function CompleteProfile() {
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
                         <option value="">Select Occupation</option>
-                        {occupationOptions.map((occupation) => (
+                        {motherOccupationOptions.map((occupation) => (
                           <option key={occupation} value={occupation}>
                             {occupation}
                           </option>
@@ -1139,13 +1275,12 @@ export default function CompleteProfile() {
                         onChange={handlePartnerChange}
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
-                        <option value="">Any Qualification</option>
-                        <option value="Matric">Matric</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Bachelor">Bachelor's</option>
-                        <option value="Master">Master's</option>
-                        <option value="PhD">PhD</option>
-                        <option value="Other">Other</option>
+                        <option value="">Any</option>
+                        {qualificationOptions.map((qual) => (
+                          <option key={qual} value={qual}>
+                            {qual}
+                          </option>
+                        ))}
                       </select>
                     </div>
 
@@ -1180,7 +1315,7 @@ export default function CompleteProfile() {
                         onChange={handlePartnerChange}
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
-                        <option value="">Any Country</option>
+                        <option value="">Any</option>
                         {countries.map((country) => (
                           <option key={country} value={country}>
                             {country}
@@ -1223,10 +1358,10 @@ export default function CompleteProfile() {
                         onChange={handlePartnerChange}
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
-                        <option value="">No preference</option>
-                        {preferredResidentOptions.map((location) => (
-                          <option key={location} value={location}>
-                            {location}
+                        <option value="">Any</option>
+                        {houseStatusOptions.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
                           </option>
                         ))}
                       </select>
@@ -1243,8 +1378,8 @@ export default function CompleteProfile() {
                         onChange={handlePartnerChange}
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
-                        <option value="">Any Cast</option>
-                        {preferredCastOptions.map((caste) => (
+                        <option value="">Any</option>
+                        {castOptions.map((caste) => (
                           <option key={caste} value={caste}>
                             {caste}
                           </option>
@@ -1263,34 +1398,36 @@ export default function CompleteProfile() {
                         onChange={handlePartnerChange}
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
-                        <option value="">Any Religion</option>
-                        <option value="Muslim">Muslim</option>
-                        <option value="Christian">Christian</option>
-                        <option value="Hindu">Hindu</option>
-                        <option value="Other">Other</option>
+                        <option value="">Any</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Christianity">Christianity</option>
+                        <option value="Hinduism">Hinduism</option>
                       </select>
                     </div>
 
                     {/* Preferred Sect */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
-                        Sect
-                      </label>
-                      <select
-                        name="preferredSect"
-                        value={partnerPrefs.preferredSect}
-                        onChange={handlePartnerChange}
-                        className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
-                      >
-                        <option value="">Any Sect</option>
-                        <option value="No preference">No preference</option>
-                        {getSectOptions("Muslim").map((sect) => (
-                          <option key={sect} value={sect}>
-                            {sect}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    {partnerPrefs.preferredReligion && 
+                     partnerPrefs.preferredReligion !== "" &&
+                     getSectOptions(partnerPrefs.preferredReligion).length > 0 && (
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">
+                          Sect
+                        </label>
+                        <select
+                          name="preferredSect"
+                          value={partnerPrefs.preferredSect}
+                          onChange={handlePartnerChange}
+                          className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
+                        >
+                          <option value="">Any</option>
+                          {getSectOptions(partnerPrefs.preferredReligion).map((sect) => (
+                            <option key={sect} value={sect}>
+                              {sect}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                   </div>
                     </div>
 
@@ -1322,14 +1459,19 @@ export default function CompleteProfile() {
                       <label className="text-sm font-medium text-gray-700">
                         Contact Person's Relation with candidate
                       </label>
-                      <input
-                        type="text"
+                      <select
                         name="contactPersonRelation"
                         value={profileData.contactPersonRelation}
                         onChange={handleProfileChange}
-                        placeholder="e.g., Father, Mother, Brother"
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
-                      />
+                      >
+                        <option value="">Select Relation</option>
+                        {contactPersonRelationOptions.map((relation) => (
+                          <option key={relation} value={relation}>
+                            {relation}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     {/* Mobile/WhatsApp Number */}
