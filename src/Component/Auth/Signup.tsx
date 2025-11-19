@@ -343,7 +343,7 @@ const Signup = () => {
       </div>
 
       {/* Right Side - Form Section with Signup and Login */}
-      <div className="flex-1 flex flex-col items-center justify-center p-4 lg:p-6 overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-center p-4 lg:p-6 overflow-y-auto bg-[#fce3e3]">
         <div className="w-full max-w-md">
           {/* Welcome Section */}
           <div className="text-center mb-4">
@@ -354,7 +354,7 @@ const Signup = () => {
             
             {/* Welcome Text */}
             <p className="text-xl font-medium text-gray-600 mb-1">WELCOME TO</p>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-1">
+            <h1 className="text-[50px] md:text-5xl font-black text-gray-800 mb-1" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900 }}>
               Rishta Hub
             </h1>
             <p className="text-xl text-gray-600">
@@ -380,9 +380,12 @@ const Signup = () => {
                   <p className="text-xs text-gray-700 flex-1">
                     Enter your WhatsApp number and password in the box below and press NEXT button
                   </p>
-                  <p className="text-xs text-gray-700 flex-1 text-right">
-                    نیچے دیے گئے خانے میں اپنا وٹس ایپ نمبر اور پاسورڈ لکھیں اور NEXT کا بٹن دبائیں
-                  </p>
+                    <div className="text-xs text-gray-700 flex-1 text-right">
+                      <p>
+                        نیچے دیئے گئے باکس میں اپنا واٹس ایپ نمبر اور پاس ورڈ درج کریں اور{" "}
+                        <span className="font-semibold text-[16px]">نیکسٹ</span> بٹن دبائیں۔
+                      </p>
+                  </div>
                 </div>
               </div>
 
@@ -494,10 +497,11 @@ const Signup = () => {
               <div className="mb-3">
                 <div className="flex items-start gap-2">
                   <h2 className="text-xs font-semibold text-black leading-tight flex-1">
-                    If you are already registered on this platform, Enter your WhatsApp number and press LOG IN button
+                    If you are already registered on this platform, enter your WhatsApp number & password and press LOG IN
                   </h2>
                   <p className="text-xs text-black leading-tight flex-1 text-right">
-                    اگر آپ پلیٹ فارم پر پہلے سے رجسٹرڈ ہیں تو اپنا وٹس ایپ نمبر لکھیں اور LOG IN کا بٹن دبائیں
+                    اگر آپ پہلے ہی اس پلیٹ فارم پر رجسٹرڈ ہیں تو اپنا واٹس ایپ نمبر اور پاس ورڈ درج کریں اور{" "}
+                    <span className="font-semibold text-[16px]">لاگ ان</span> دبائیں۔
                   </p>
                 </div>
               </div>

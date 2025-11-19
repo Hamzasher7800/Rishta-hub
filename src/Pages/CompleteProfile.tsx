@@ -15,6 +15,8 @@ import {
   Users,
 } from "lucide-react";
 import Button from "../Component/Common/Button";
+import girlImage from "../assets/images/girl.jpeg";
+import boyImage from "../assets/images/boy.jpeg";
 
 // Updated Country data for dropdown
 const countries = [
@@ -349,7 +351,7 @@ const houseStatusOptions = [
 ];
 
 // Sibling options for dropdown (1 to 9)
-const siblingOptions = Array.from({ length: 9 }, (_, i) => (i + 1).toString());
+const siblingOptions = Array.from({ length: 10 }, (_, i) => i.toString());
 
 // Cast options
 const castOptions = [
@@ -498,8 +500,8 @@ export default function CompleteProfile() {
     const { name, value } = e.target;
     setPartnerPrefs((prev) => {
       const updated = {
-        ...prev,
-        [name]: value,
+      ...prev,
+      [name]: value,
       };
       
       // Reset preferred sect when preferred religion changes
@@ -582,10 +584,21 @@ export default function CompleteProfile() {
     setLoading(true);
 
     try {
+      // Determine default image based on gender if no image was uploaded
+      let finalProfileImage = imagePreview;
+      if (!finalProfileImage) {
+        if (profileData.gender === "Female") {
+          finalProfileImage = girlImage;
+        } else if (profileData.gender === "Male") {
+          finalProfileImage = boyImage;
+        }
+        // If gender is not selected or is Transgender, leave it empty
+      }
+
       await setDoc(doc(db, "users", user.uid), {
         ...profileData,
         partnerPrefs,
-        profileImage: imagePreview || "",
+        profileImage: finalProfileImage || "",
         uid: user.uid,
         email: user.email || "",
         createdAt: new Date().toISOString(),
@@ -638,7 +651,7 @@ export default function CompleteProfile() {
               <div className="space-y-6">
                 {/* Profile Picture Upload */}
                 <div className="text-center bg-gray-50 rounded-xl p-4">
-                  <label className="text-sm font-semibold text-gray-700 block mb-3">
+                  <label className="text-base font-bold text-gray-700 block mb-3">
                     Profile Picture
                   </label>
 
@@ -658,6 +671,24 @@ export default function CompleteProfile() {
                           className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
                         >
                           <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    ) : profileData.gender === "Female" || profileData.gender === "Male" ? (
+                      <div className="relative">
+                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                          <img
+                            src={profileData.gender === "Female" ? girlImage : boyImage}
+                            alt="Default profile"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="absolute -bottom-1 -right-1 bg-blue-500 text-white rounded-full p-1.5 hover:bg-blue-600 transition-colors"
+                          title="Upload your own image"
+                        >
+                          <Camera className="h-3 w-3" />
                         </button>
                       </div>
                     ) : (
@@ -710,7 +741,7 @@ export default function CompleteProfile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Profile Created By */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Profile Created By *
                       </label>
                       <select
@@ -733,7 +764,7 @@ export default function CompleteProfile() {
 
                     {/* Name of Candidate */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Name of Candidate *
                       </label>
                       <input
@@ -749,7 +780,7 @@ export default function CompleteProfile() {
 
                     {/* Gender */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Gender *
                       </label>
                       <select
@@ -768,7 +799,7 @@ export default function CompleteProfile() {
 
                     {/* Date of Birth */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Date of Birth *
                       </label>
                       <input
@@ -783,7 +814,7 @@ export default function CompleteProfile() {
 
                     {/* Height */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Height *
                       </label>
                       <select
@@ -813,7 +844,7 @@ export default function CompleteProfile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Marital Status */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Marital Status *
                       </label>
                       <select
@@ -835,7 +866,7 @@ export default function CompleteProfile() {
                     {/* Marital Status Description - Show only if "Describe your Status" is selected */}
                     {profileData.maritalStatus === "Describe your Status" && (
                       <div className="md:col-span-2 lg:col-span-3 space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className="text-base font-bold text-gray-700">
                           Describe your Status (50 words max) *
                         </label>
                         <textarea
@@ -856,7 +887,7 @@ export default function CompleteProfile() {
 
                     {/* Religion */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Religion
                       </label>
                       <select
@@ -876,8 +907,8 @@ export default function CompleteProfile() {
 
                     {/* Religion Description - Show when "Describe your Religion" is selected */}
                     {profileData.religion === "Describe your Religion" && (
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
+                    <div className="space-y-2">
+                      <label className="text-base font-bold text-gray-700">
                           Describe your Religion <span className="text-red-500">*</span>
                         </label>
                         <textarea
@@ -901,29 +932,29 @@ export default function CompleteProfile() {
                      profileData.religion !== "Describe your Religion" && 
                      getSectOptions(profileData.religion).length > 0 && (
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className="text-base font-bold text-gray-700">
                           Sect
-                        </label>
-                        <select
-                          name="sect"
-                          value={profileData.sect}
-                          onChange={handleProfileChange}
-                          className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
-                        >
-                          <option value="">Select Sect</option>
-                          {getSectOptions(profileData.religion).map((sect) => (
-                            <option key={sect} value={sect}>
-                              {sect}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      </label>
+                      <select
+                        name="sect"
+                        value={profileData.sect}
+                        onChange={handleProfileChange}
+                        className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
+                      >
+                        <option value="">Select Sect</option>
+                        {getSectOptions(profileData.religion).map((sect) => (
+                          <option key={sect} value={sect}>
+                            {sect}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                     )}
 
                     {/* Sect Description - Show when "Describe your Religion" is selected */}
                     {profileData.religion === "Describe your Religion" && (
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
+                    <div className="space-y-2">
+                      <label className="text-base font-bold text-gray-700">
                           Describe your Sect
                         </label>
                         <textarea
@@ -939,7 +970,7 @@ export default function CompleteProfile() {
 
                     {/* Cast */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Cast
                       </label>
                       <select
@@ -971,7 +1002,7 @@ export default function CompleteProfile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Qualification */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Qualifications
                       </label>
                       <select
@@ -991,7 +1022,7 @@ export default function CompleteProfile() {
 
                     {/* Profession */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Profession
                       </label>
                       <select
@@ -1021,7 +1052,7 @@ export default function CompleteProfile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Country Living In */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Country Living In
                       </label>
                       <select
@@ -1041,7 +1072,7 @@ export default function CompleteProfile() {
 
                     {/* City */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         City
                       </label>
                       <select
@@ -1064,7 +1095,7 @@ export default function CompleteProfile() {
 
                     {/* House Status */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         House Status
                       </label>
                       <select
@@ -1094,7 +1125,7 @@ export default function CompleteProfile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Father Occupation */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Father Occupation
                       </label>
                       <select
@@ -1114,7 +1145,7 @@ export default function CompleteProfile() {
 
                     {/* Mother Occupation */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Mother Occupation
                       </label>
                       <select
@@ -1134,7 +1165,7 @@ export default function CompleteProfile() {
 
                     {/* Number of Brothers */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Number of Brothers
                       </label>
                       <select
@@ -1154,7 +1185,7 @@ export default function CompleteProfile() {
 
                     {/* Number of Married Brothers */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Number of Married Brothers
                       </label>
                       <select
@@ -1174,7 +1205,7 @@ export default function CompleteProfile() {
 
                     {/* Number of Sisters */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Number of Sisters
                       </label>
                       <select
@@ -1194,7 +1225,7 @@ export default function CompleteProfile() {
 
                     {/* Number of Married Sisters */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Number of Married Sisters
                       </label>
                       <select
@@ -1233,7 +1264,7 @@ export default function CompleteProfile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Age Range */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Age (Min)
                       </label>
                       <input
@@ -1249,7 +1280,7 @@ export default function CompleteProfile() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Age (Max)
                       </label>
                       <input
@@ -1266,7 +1297,7 @@ export default function CompleteProfile() {
 
                     {/* Preferred Qualification */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Qualification
                       </label>
                       <select
@@ -1286,7 +1317,7 @@ export default function CompleteProfile() {
 
                     {/* Preferred Height */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Height
                       </label>
                       <select
@@ -1306,7 +1337,7 @@ export default function CompleteProfile() {
 
                     {/* Preferred Country */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Country
                       </label>
                       <select
@@ -1326,7 +1357,7 @@ export default function CompleteProfile() {
 
                     {/* Preferred City */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         City
                       </label>
                       <select
@@ -1349,7 +1380,7 @@ export default function CompleteProfile() {
 
                     {/* Preferred Residence */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Residence
                       </label>
                       <select
@@ -1369,7 +1400,7 @@ export default function CompleteProfile() {
 
                     {/* Preferred Cast */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Cast
                       </label>
                       <select
@@ -1389,7 +1420,7 @@ export default function CompleteProfile() {
 
                     {/* Preferred Religion */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Religion
                       </label>
                       <select
@@ -1409,23 +1440,23 @@ export default function CompleteProfile() {
                     {partnerPrefs.preferredReligion && 
                      partnerPrefs.preferredReligion !== "" &&
                      getSectOptions(partnerPrefs.preferredReligion).length > 0 && (
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
+                    <div className="space-y-2">
+                      <label className="text-base font-bold text-gray-700">
                           Sect
-                        </label>
-                        <select
-                          name="preferredSect"
-                          value={partnerPrefs.preferredSect}
-                          onChange={handlePartnerChange}
-                          className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
-                        >
+                      </label>
+                      <select
+                        name="preferredSect"
+                        value={partnerPrefs.preferredSect}
+                        onChange={handlePartnerChange}
+                        className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
+                      >
                           <option value="">Any</option>
                           {getSectOptions(partnerPrefs.preferredReligion).map((sect) => (
-                            <option key={sect} value={sect}>
-                              {sect}
-                            </option>
-                          ))}
-                        </select>
+                          <option key={sect} value={sect}>
+                            {sect}
+                          </option>
+                        ))}
+                      </select>
                       </div>
                     )}
                   </div>
@@ -1441,7 +1472,7 @@ export default function CompleteProfile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Contact Person Name */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Contact Person Name
                       </label>
                       <input
@@ -1456,7 +1487,7 @@ export default function CompleteProfile() {
 
                     {/* Contact Person's Relation with candidate */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-base font-bold text-gray-700">
                         Contact Person's Relation with candidate
                       </label>
                       <select
@@ -1476,7 +1507,7 @@ export default function CompleteProfile() {
 
                     {/* Mobile/WhatsApp Number */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700 flex items-center gap-1">
+                      <label className="text-base font-bold text-gray-700 flex items-center gap-1">
                         <Phone className="h-4 w-4" />
                         Mobile/WhatsApp Number
                       </label>
@@ -1492,9 +1523,7 @@ export default function CompleteProfile() {
 
                     {/* No call - Messages only */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
-                        No call - Messages only
-                      </label>
+                      
                       <div className="flex items-center h-12">
                         <input
                           type="checkbox"
@@ -1514,20 +1543,7 @@ export default function CompleteProfile() {
                   </div>
                 </div>
 
-                    {/* Preferred Call timings */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
-                        Preferred Call timings
-                      </label>
-                      <input
-                        type="text"
-                        name="preferredCallTimings"
-                        value={profileData.preferredCallTimings}
-                        onChange={handleProfileChange}
-                        placeholder="e.g., 9 AM - 6 PM"
-                        className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
-                      />
-                    </div>
+                    
                   </div>
                 </div>
 
