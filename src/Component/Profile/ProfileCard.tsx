@@ -44,140 +44,125 @@ export default function ProfileCard({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 hover:border-pink-300 group cursor-pointer">
-      {/* Profile Image Section */}
-      <div className="relative h-48 overflow-hidden">
+    <div className="rounded-2xl bg-white border border-gray-100 shadow-md hover:shadow-lg transition-all duration-200 flex flex-col overflow-hidden cursor-pointer">
+      {/* Image */}
+      <div className="relative h-44 bg-gray-50">
         {profile.profileImage ? (
           <img
             src={profile.profileImage}
             alt={profile.name}
-            className="w-full h-full  object-contain rounded-xl bg-gray-100 group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
-            <div className="text-5xl text-purple-400">
-              {profile.gender === "Female" ? "👩" : "👨"}
-            </div>
+          <div className="w-full h-full flex items-center justify-center text-5xl text-gray-400">
+            {profile.gender === "Female" ? "👩" : "👨"}
           </div>
         )}
 
-        {/* Profile Type Badge */}
-        <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-semibold text-white">
+        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-black/60 text-white">
           {profile.type === "user" ? "User Profile" : "Added Profile"}
         </div>
       </div>
 
-      {/* Profile Content */}
-      <div className="p-5">
-        {/* Name and Basic Info */}
-        <div className="mb-4">
-          <div className="flex items-start justify-between mb-3">
-            <h3 className="text-xl font-bold text-gray-800 truncate flex-1 mr-2">
+      {/* Content */}
+      <div className="flex-1 p-4 space-y-3 text-sm">
+        <div>
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-lg font-semibold text-gray-900 truncate">
               {profile.name || "No Name"}
             </h3>
-          </div>
 
-          {/* Gender and Age Row */}
-          <div className="flex items-center gap-2 mb-3">
-            <span
-              className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                profile.gender === "Male"
-                  ? "bg-blue-100 text-blue-800 border border-blue-200"
-                  : "bg-pink-100 text-pink-800 border border-pink-200"
-              }`}
-            >
-              {profile.gender || "Not specified"}
-            </span>
-            
-            {profile.dateOfBirth && (
-              <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold border border-gray-200">
-                {calculateAge(profile.dateOfBirth)} years
+            {profile.currentCity && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-pink-600 bg-pink-50 border border-pink-100 px-2 py-0.5 rounded-full whitespace-nowrap">
+                <MapPin className="h-3 w-3" />
+                {profile.currentCity}
               </span>
             )}
           </div>
 
-          {/* Profession and Location */}
-          <div className="space-y-2">
-            {profile.occupation && (
-              <div className="flex items-center gap-2 text-gray-700">
-                <Briefcase className="h-4 w-4 text-blue-500 flex-shrink-0" />
-                <span className="text-base font-medium truncate">{profile.occupation}</span>
-              </div>
+          <div className="mt-2 flex flex-wrap items-center gap-1.5">
+            {profile.gender && (
+              <span
+                className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
+                  profile.gender === "Male"
+                    ? "bg-blue-50 border-blue-100 text-blue-700"
+                    : "bg-pink-50 border-pink-100 text-pink-700"
+                }`}
+              >
+                {profile.gender}
+              </span>
             )}
 
-            {profile.currentCity && (
-              <div className="flex items-center gap-2 text-gray-700">
-                <MapPin className="h-4 w-4 text-green-500 flex-shrink-0" />
-                <span className="text-base truncate">{profile.currentCity}</span>
-              </div>
+            {profile.dateOfBirth && (
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-gray-50 border-gray-100 text-gray-700">
+                {calculateAge(profile.dateOfBirth)} years
+              </span>
+            )}
+
+            {profile.maritalStatus && (
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-purple-50 border-purple-100 text-purple-700">
+                {profile.maritalStatus}
+              </span>
             )}
           </div>
         </div>
 
-        {/* Additional Details */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="space-y-2 text-[13px] text-gray-600">
+          {profile.occupation && (
+            <div className="flex items-center gap-2">
+              <Briefcase className="h-3.5 w-3.5 text-indigo-500 flex-shrink-0" />
+              <span className="truncate">{profile.occupation}</span>
+            </div>
+          )}
+
           {profile.qualification && (
             <div className="flex items-center gap-2">
-              <GraduationCap className="h-4 w-4 text-purple-500 flex-shrink-0" />
-              <span className="text-sm text-gray-600 truncate">
-                {profile.qualification}
-              </span>
+              <GraduationCap className="h-3.5 w-3.5 text-purple-500 flex-shrink-0" />
+              <span className="truncate">{profile.qualification}</span>
             </div>
           )}
 
           {profile.religion && (
-            <div className="flex items-center gap-2 text-sm text-gray-600 truncate">
-              <span className="text-base">🕌</span>
-              {profile.religion}
-            </div>
-          )}
-
-          {profile.maritalStatus && (
-            <div className="flex items-center gap-2 text-sm text-gray-600 truncate">
-              <span className="text-base">💍</span>
-              {profile.maritalStatus}
+            <div className="flex items-center gap-2">
+              <span className="text-base leading-none">🕌</span>
+              <span className="truncate">{profile.religion}</span>
             </div>
           )}
 
           {profile.caste && (
-            <div className="flex items-center gap-2 text-sm text-gray-600 truncate">
-              <span className="text-base">👑</span>
-              {profile.caste}
+            <div className="flex items-center gap-2">
+              <span className="text-base leading-none">👑</span>
+              <span className="truncate">{profile.caste}</span>
             </div>
           )}
         </div>
 
-        {/* About Me Preview */}
         {(profile.aboutMe || profile.bio) && (
-          <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
-              {profile.aboutMe || profile.bio}
-            </p>
-          </div>
+          <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
+            {profile.aboutMe || profile.bio}
+          </p>
         )}
+      </div>
 
-        {/* Action Buttons */}
-        <div className="space-y-2">
-          {/* View Profile Button */}
+      {/* Actions */}
+      <div className="px-4 pb-4 space-y-2">
+        <button
+          onClick={handleViewProfile}
+          className="w-full text-sm font-semibold text-white bg-pink-500 hover:bg-pink-600 rounded-xl py-2.5 flex items-center justify-center gap-1 transition-colors"
+        >
+          <Heart className="h-4 w-4" />
+          View Profile
+        </button>
+
+        {isAdmin && (
           <button
-            onClick={handleViewProfile}
-            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-lg text-base"
+            onClick={handleDeleteClick}
+            className="w-full text-sm font-semibold text-red-600 border border-red-200 hover:bg-red-50 rounded-xl py-2.5 flex items-center justify-center gap-1 transition-colors"
           >
-            <Heart className="h-4 w-4" />
-            View Profile
+            <Trash2 className="h-4 w-4" />
+            Delete Profile
           </button>
-
-          {/* Admin Delete Button */}
-          {isAdmin && (
-            <button
-              onClick={handleDeleteClick}
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors duration-200 text-base"
-            >
-              <Trash2 className="h-4 w-4" />
-              Delete Profile
-            </button>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

@@ -278,6 +278,7 @@ const motherOccupationOptions = [
 
 // Contact Person Relation options
 const contactPersonRelationOptions = [
+  "Self",
   "Father",
   "Mother",
   "Brother",
@@ -300,6 +301,7 @@ const getSectOptions = (religion: string) => {
   switch (religion) {
     case "Islam":
       return [
+        "No - Sect. Proud to be Muslim",
         "Barelvi / Ahle Sunnat wal Jama'at",
         "Deobandi",
         "Ahl-e-Hadith",
@@ -348,6 +350,7 @@ const houseStatusOptions = [
   "Rented",
   "Family Owned",
   "Govt Residence",
+  "Describe your residential status",
 ];
 
 // Sibling options for dropdown (1 to 9)
@@ -413,6 +416,7 @@ export default function CompleteProfile() {
     currentCity: "",
     house: "",
     houseStatus: "",
+    houseStatusDescription: "", // For "Describe your residential status" option
 
     // Family Information
     fatherOccupation: "",
@@ -476,6 +480,11 @@ export default function CompleteProfile() {
         updatedData.religionDescription = "";
         updatedData.sect = "";
         updatedData.sectDescription = "";
+      }
+
+      // Reset house status description when house status changes
+      if (name === "houseStatus" && value !== "Describe your residential status") {
+        updatedData.houseStatusDescription = "";
       }
 
       // Reset city when country changes
@@ -572,6 +581,15 @@ export default function CompleteProfile() {
       !profileData.religionDescription.trim()
     ) {
       alert("Please describe your religion.");
+      return;
+    }
+
+    // Validate residential status description if "Describe your residential status" is selected
+    if (
+      profileData.houseStatus === "Describe your residential status" &&
+      !profileData.houseStatusDescription.trim()
+    ) {
+      alert("Please describe your residential status.");
       return;
     }
 
@@ -752,6 +770,7 @@ export default function CompleteProfile() {
                         required
                       >
                         <option value="">Select</option>
+                        <option value="Self">Self</option>
                         <option value="Father">Father</option>
                         <option value="Mother">Mother</option>
                         <option value="Brother">Brother</option>
@@ -1093,10 +1112,10 @@ export default function CompleteProfile() {
                       </select>
                     </div>
 
-                    {/* House Status */}
+                    {/* Residential Status */}
                     <div className="space-y-2">
                       <label className="text-base font-bold text-gray-700">
-                        House Status
+                        Residential Status
                       </label>
                       <select
                         name="houseStatus"
@@ -1104,7 +1123,7 @@ export default function CompleteProfile() {
                         onChange={handleProfileChange}
                         className="w-full h-12 px-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
                       >
-                        <option value="">Select House Status</option>
+                        <option value="">Select Residential Status</option>
                         {houseStatusOptions.map((status) => (
                           <option key={status} value={status}>
                             {status}
@@ -1112,6 +1131,28 @@ export default function CompleteProfile() {
                         ))}
                       </select>
                     </div>
+
+                    {/* Residential Status Description - Show only if "Describe your residential status" is selected */}
+                    {profileData.houseStatus === "Describe your residential status" && (
+                      <div className="md:col-span-2 lg:col-span-3 space-y-2">
+                        <label className="text-base font-bold text-gray-700">
+                          Describe your residential status (50 words max) *
+                        </label>
+                        <textarea
+                          name="houseStatusDescription"
+                          value={profileData.houseStatusDescription}
+                          onChange={handleProfileChange}
+                          placeholder="Describe your residential status..."
+                          maxLength={250}
+                          rows={3}
+                          className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 resize-none"
+                          required
+                        />
+                        <p className="text-xs text-gray-500">
+                          {profileData.houseStatusDescription.length}/250 characters
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 
