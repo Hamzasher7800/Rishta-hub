@@ -46,21 +46,21 @@ export default function ProfileCard({
   return (
     <div className="rounded-2xl bg-white border border-gray-100 shadow-md hover:shadow-lg transition-all duration-200 flex flex-col overflow-hidden cursor-pointer">
       {/* Image */}
-      <div className="relative h-44 bg-gray-50">
-        {profile.profileImage ? (
+      <div className="relative bg-gray-100 aspect-[4/5] w-full overflow-hidden flex items-center justify-center border-b border-gray-200">
+        {profile.profileImage && !profile.__imgError ? (
           <img
             src={profile.profileImage}
             alt={profile.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center rounded-md"
+            onError={e => { e.currentTarget.style.display = 'none'; if (profile) profile.__imgError = true; }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl text-gray-400">
-            {profile.gender === "Female" ? "👩" : "👨"}
+          <div className="flex items-center justify-center w-full h-full text-6xl text-gray-300">
+            {profile.gender === 'Female' ? '👩' : '👨'}
           </div>
         )}
-
         <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-black/60 text-white">
-          {profile.type === "user" ? "User Profile" : "Added Profile"}
+          {profile.type === 'user' ? 'User Profile' : 'Added Profile'}
         </div>
       </div>
 
@@ -151,7 +151,7 @@ export default function ProfileCard({
           className="w-full text-sm font-semibold text-white bg-pink-500 hover:bg-pink-600 rounded-xl py-2.5 flex items-center justify-center gap-1 transition-colors"
         >
           <Heart className="h-4 w-4" />
-          View Profile
+          View Profile Details
         </button>
 
         {isAdmin && (
